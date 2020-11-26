@@ -1,7 +1,9 @@
 from matplotlib import pyplot as plt
+import plotly.express as px
 from configs import *
+from wordcloud import WordCloud, STOPWORDS
 from shapely.geometry import Point
-from  shapely.geometry.multipolygon import MultiPolygon
+from shapely.geometry.multipolygon import MultiPolygon
 import matplotlib
 import numpy as np
 import pandas as pd
@@ -19,8 +21,8 @@ def plot_histogram(keys, values, xlabel="x", ylabel="y", sort=False, size=(20, 1
     :param sort: flag indicates whether the data is sorted
     :return: None
     """
-    assert isinstance(keys, (np.ndarray, tuple, list))
-    assert isinstance(values, (np.ndarray, tuple, list))
+    assert isinstance(keys, (pd.Series, np.ndarray, tuple, list))
+    assert isinstance(values, (pd.Series, np.ndarray, tuple, list))
     assert isinstance(xlabel, str) and isinstance(ylabel, str)
     assert isinstance(sort, bool)
     assert isinstance(size, (list, tuple))
@@ -33,7 +35,8 @@ def plot_histogram(keys, values, xlabel="x", ylabel="y", sort=False, size=(20, 1
     fig = plt.figure(figsize=size)
 
     # set bar color
-    norm = plt.Normalize(min(values), max(values))
+    offset = 1 # this offset is set to avoid pure white bars
+    norm = plt.Normalize(min(values)-offset, max(values)+offset)
     norm_y = norm(values)
     map_vir = matplotlib.cm.get_cmap(name='hot')
 
@@ -81,7 +84,7 @@ def plot_choropleth_map(pd_df, attr, state=True, axis_on=False, size=(20, 10), *
             x, y = loc.coords[:][0]
             plt.text(x, y, state_abbr, fontweight='black', fontsize=20, fontstyle='italic', ha='center')
 
-    # add the data column into the geopandaframe
+    # add the data column into the geodataframe
     gpd_df[attr] = gpd_df.apply(lambda x: column_map[x['postal']], axis=1)
 
     fig, ax = plt.subplots(figsize=size)
@@ -127,8 +130,63 @@ def plot_bubble_map(pd_point, axis_on=False, size=(20, 10), **kwargs):
     plt.show()
 
 
+def plot_pie_chart(df, attr, label, th, **kwargs):
+    """
+    Plot pie chart using the given pandas dataframe
+    :param df: given pandas dataframe
+    :param attr: given attributes we are interested in
+    :param label: plot labels
+    :param th: given threshold that the values below it will be assigned as 'Others'
+    :param kwargs:
+    :return:
+    """
+    assert isinstance(df, pd.DataFrame)
+    assert isinstance(attr, str) and attr in df
+    assert isinstance(label, str) and label in df
+
+    df.loc[df[attr] < th, label] = 'Others'
+    fig = px.pie(df, values=attr, names=label, **kwargs)
+    fig.show()
+
+
+def plot_wordcloud(df, attr, size=(20, 10), stopwords=set(), **kwargs):
+    """
+    Plot a wordcloud figure with given pandas dataframe and the attr we are interested in
+    :param df: pandas dataframe
+    :param attr: given attributes
+    :param size: figure size
+    :param stopwords: stopwords set, if not specified, use the default stopwords in wordcloud
+    :param kwargs:
+    :return:
+    """
+    assert isinstance(df, pd.DataFrame)
+    assert isinstance(attr, str) and attr in df
+    assert isinstance(size, (list, tuple))
+    assert isinstance(stopwords, set)
+
+    if not stopwords:
+        stopwords = set(STOPWORDS)
+
+    freq = df[attr].value_counts().to_dict()
+
+    wordcloud = WordCloud(width=800, height=800,
+                          background_color='white',
+                          stopwords=stopwords,
+                          min_font_size=10,
+                          **kwargs).generate_from_frequency(freq)
+
+    # plot the WordCloud image
+    fig, ax = plt.subplots(figsize=size, facecolor=None)
+    ax.imshow(wordcloud)
+    ax.axis("off")
+    fig.tight_layout(pad=0)
+
+    fig.show()
+
+
 if __name__ == '__main__':
-    data = pd.read_csv('Killings by State.csv')
-    plot_choropleth_map(data, '# People Killed', state=False, cmap='Reds')
+    data = pd.read_csv('../2013-2019 Killings by State.csv')
+
+    plot_histogram(data['State Abbreviation'], data['Rate (All People)'], 'State', 'Rate', sort=True)
 
 
