@@ -4,6 +4,7 @@ import holoviews as hv
 import matplotlib.pyplot as plt
 from operator import add
 import numpy as np
+from datetime import datetime
 hv.extension('bokeh')
 
 def attack_over_year_Plot(fileName, button = 'year', outputName = 'attack_over_year.html'):
@@ -11,7 +12,7 @@ def attack_over_year_Plot(fileName, button = 'year', outputName = 'attack_over_y
     This function is to plot the number of attacks over months for each year
     :param fileName: A given file in csv format, it should contains a 'date' column
     :param button: the interactive button, suppors 'year' or 'month'
-    :param outputName: the path and name to store the genreated interactive plot(in .html format).
+    :param outputName: the path and name to store the generated interactive plot(in .html format).
     :return: a plot that will be saved in .html
     """
     assert (button == 'year' or button == 'month')
@@ -31,7 +32,7 @@ def total_attackes_over_year_Simple(fileName, outputName = 'total_attack_over_ye
     """
     This function is to generate a bar plot of the total number of attacks over year
     :param fileName: A given file in csv format, it should contains a 'date' column
-    :param outputName: the path and name to store the genreated interactive plot(in .html format).
+    :param outputName: the path and name to store the plot
     :return: a bar plot that will be saved in the given outputName
     """
     _, attacksPerYear = processData_attack(fileName)
@@ -57,13 +58,12 @@ def total_attackes_over_year_Simple(fileName, outputName = 'total_attack_over_ye
     plt.savefig(outputName)
     plt.show()
 
-
 def total_attackes_over_year_Advanced(fileName, colorMap = "viridis", outputName = 'total_attack_over_year_bar_advanced.png'):
     """
     This function is to generate a bar plot of the total number of attacks over year(show month as well)
     :param fileName: A given file in csv format, it should contains a 'date' column
     :param colorMap: the cmap that will be used in plot
-    :param outputName: the path and name to store the genreated interactive plot(in .html format).
+    :param outputName: the path and name to store the plot.
     :return: a bar plot that will be saved in the given outputName
     """
     _, attacksPerYear = processData_attack(fileName)
@@ -116,7 +116,7 @@ def processData_attack(fileName):
     :param fileName: A given file in csv format, it should contains a 'date' column
     :return: pd.DataFrame and a nested dictionary({year:{month:attacks, month:attacks,...},...}
     """
-    dataset = pd.read_csv(fileName)
+    dataset = pd.read_csv(fileName, engine = 'python')
     attacksPerYear = {}  # key: year(str), value: a dictionary stores attachePerMonth dictionary
     yearList = ['2013', '2014', '2015','2016','2017','2018','2019','2020']
     for year in yearList:
@@ -151,9 +151,20 @@ def count_attacks_each_month(GivenYear, data):
     assert isinstance(data, pd.DataFrame)
 
     attacksPerMonth = defaultdict(int)
+
     for row in data['date']:
-        rowVal = row.split('-')
-        year, month, day = rowVal[0], rowVal[1], rowVal[2]
+        # rowVal = row.split('-')
+        # year, month, day = rowVal[0], rowVal[1], rowVal[2]
+        if '/' in row:
+            rowVal = row.split('/')
+            year, month, day = rowVal[0], rowVal[1], rowVal[2]
+        else:
+            rowVal = row.split('-')
+            year, month, day = rowVal[0], rowVal[1], rowVal[2]
+            
+        if len(month) == 1:
+            month = '0' + month
+
         if year == GivenYear:
             attacksPerMonth[month] = attacksPerMonth[month] + 1
         else:
@@ -166,8 +177,8 @@ def count_attacks_each_month(GivenYear, data):
 if __name__ == '__main__':
     # load csv files
     fileName = 'MergeCommon_final.csv'
-    # fig = attack_over_year_Plot(fileName)
-    # total_attackes_over_year_Simple(fileName)
+    fig = attack_over_year_Plot(fileName)
+    total_attackes_over_year_Simple(fileName)
     total_attackes_over_year_Advanced(fileName)
 
 
