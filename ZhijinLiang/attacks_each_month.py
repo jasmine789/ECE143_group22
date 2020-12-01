@@ -2,7 +2,8 @@
 # It includes a simplified bar plot which indicates the total number of attacks of each year, and an advanced version
 # of above bar chart(also include month info).
 # Moreover, this file contains an interactive version to show the number of attacks changing over years/months.
-# The data used in 'MergeCommon_final.csv'
+# The dataset used is 'MergeCommon_final.csv'
+
 import pandas as pd
 from collections import defaultdict
 import holoviews as hv

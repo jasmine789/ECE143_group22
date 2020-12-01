@@ -1,4 +1,7 @@
-# This file contains the age distribution plot(including data processing and plot)
+# This file contains the age distribution plots, including an overall distribution, age distributions for different
+# gender and age distributions for different race.
+# The dataset used is 'MergeCommon_final.csv'
+
 import pandas as pd
 import seaborn as sns
 import numpy as np
