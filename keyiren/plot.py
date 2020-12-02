@@ -290,7 +290,7 @@ def plot_weighted_bar(keys, values, weights, count, xlabel="x", ylabel="y", titl
         else:
             x.append(x[-1]+weights[i-1]/2+interval+w/2)
 
-    fig = plt.figure(figsize=size)
+    fig, ax = plt.subplots(figsize=size)
 
     plt.bar(x, values, weights, color=['orangered']+['silver']*(len(x)-1))
 
@@ -305,6 +305,9 @@ def plot_weighted_bar(keys, values, weights, count, xlabel="x", ylabel="y", titl
     plt.ylabel(ylabel, fontsize=12)
     plt.title(title, fontsize=12)
     plt.xticks(x, ['39.7M', '57.5M', '197.2M', '17.4M'], fontsize=12)
+
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
 
     plt.show()
 
