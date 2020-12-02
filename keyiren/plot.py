@@ -256,10 +256,73 @@ def plot_waffle(pd_df, attr, title="", rows=15, cols=20, **kwargs):
     fig.show()
 
 
+def plot_weighted_bar(keys, values, weights, count, xlabel="x", ylabel="y", title="", sort=False, size=(20, 10), **kwargs):
+    """
+    Plot interactive weighted bar plot using plotly
+    Function that plot the given data as histograms
+    :param keys: given key data on the X axis
+    :param values: given value data on the Y axis
+    :param weights: along which attributes do we specify the bar weights
+    :param xlabel: label of x axis
+    :param ylabel: label of y axis
+    :param sort: flag indicates whether the data is sorted
+    :param size: default plot size
+    :return: None
+    :return:
+    """
+    assert isinstance(keys, (pd.Series, np.ndarray, tuple, list))
+    assert isinstance(values, (pd.Series, np.ndarray, tuple, list))
+    assert isinstance(xlabel, str) and isinstance(ylabel, str)
+    assert isinstance(sort, bool)
+    assert isinstance(size, (list, tuple))
+
+    interval = 0.01
+
+    # sort if needed
+    if sort:
+        values, weights, keys, count = zip(*sorted(zip(values, weights, keys, count), reverse=True))
+
+    # transform weights into x coordinates
+    x = []
+    for i, w in enumerate(weights):
+        if not x:
+            x.append(w/2)
+        else:
+            x.append(x[-1]+weights[i-1]/2+interval+w/2)
+
+    fig = plt.figure(figsize=size)
+
+    plt.bar(x, values, weights, color=['orangered']+['silver']*(len(x)-1))
+
+    # add text on top of the bar and middle
+    for _x, _y, k, c in zip(x, values, keys, count):
+        plt.text(_x, _y + 0.05, k.split()[0], ha='center', va='bottom', fontsize=12, fontweight='bold')
+        plt.text(_x, _y/2, '%d killed'% c, ha='center', va='bottom', fontsize=12)
+
+    # plt.axis('off')
+
+    plt.xlabel(xlabel, fontsize=12)
+    plt.ylabel(ylabel, fontsize=12)
+    plt.title(title, fontsize=12)
+    plt.xticks(x, ['39.7M', '57.5M', '197.2M', '17.4M'], fontsize=12)
+
+    plt.show()
+
+
 if __name__ == '__main__':
-    data = pd.read_excel('../MPVDatasetDownload.xlsx')
-    plot_waffle(data, 'Criminal Charges?', title='no', rows=15, cols=20)
-    # data = pd.read_csv('../MergeCommon_loc_disposition.csv', engine='python')
-    # plot_wordcloud(data, 'armed', min_font_size=10)
+    data = pd.read_csv('../2013-2019 Killings by State and crime rate.csv')
+    pop = ['Black Population', 'Hispanic Population', 'Asian Population', 'White Population']
+    count = ['# Black people killed', '# Hispanic people killed', '# Asian people killed', '# White people killed']
+
+    pops = np.array([data[key].sum() for key in pop])
+    weights = pops / pops.sum()
+    y = np.array([data[key].sum() for key in count]) / pops * 10**6
+    killings = np.array([data[key].sum() for key in count])
+
+    plot_weighted_bar(pop, y, weights, killings,
+                      xlabel='Part of U.S population',
+                      ylabel='Killings per million',
+                      title='Racial disparity in killing rate',
+                      sort=True)
 
 

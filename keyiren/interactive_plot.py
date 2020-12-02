@@ -95,37 +95,6 @@ def plot_intbubble_map(pd_df, axis_on=False, size=(20, 10), **kwargs):
     fig.show()
 
 
-def plot_weighted_bar(keys, values, weights, xlabel="x", ylabel="y", sort=False, size=(20, 10), **kwargs):
-    """
-    Plot interactive weighted bar plot using plotly
-    Function that plot the given data as histograms
-    :param keys: given key data on the X axis
-    :param values: given value data on the Y axis
-    :param weights: along which attributes do we specify the bar weights
-    :param xlabel: label of x axis
-    :param ylabel: label of y axis
-    :param sort: flag indicates whether the data is sorted
-    :param size: default plot size
-    :return: None
-    :return:
-    """
-    assert isinstance(keys, (pd.Series, np.ndarray, tuple, list))
-    assert isinstance(values, (pd.Series, np.ndarray, tuple, list))
-    assert isinstance(xlabel, str) and isinstance(ylabel, str)
-    assert isinstance(sort, bool)
-    assert isinstance(size, (list, tuple))
-
-    fig = go.Figure(data=[go.Bar(
-        x=keys,
-        y=values,
-        width=weights,
-        hovertext=[],
-
-    )])
-
-    fig.show()
-
-
 if __name__ == '__main__':
     data = pd.read_csv('../MergeCommon_loc_disposition.csv', engine='python')
     plot_intbubble_map(data, hovertext=data['city'])
