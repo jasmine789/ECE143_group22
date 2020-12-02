@@ -1,23 +1,24 @@
 from matplotlib import pyplot as plt
+import collections
 import plotly.express as px
 from configs import *
 from wordcloud import WordCloud, STOPWORDS
-from shapely.geometry import Point
-from shapely.geometry.multipolygon import MultiPolygon
 import matplotlib
 import numpy as np
 import pandas as pd
 import geopandas as gpd
 import transforms
+from pywaffle import Waffle
 
 
-def plot_histogram(keys, values, xlabel="x", ylabel="y", sort=False, size=(20, 10), **kwargs):
+def plot_histogram(keys, values, xlabel="x", ylabel="y", title='',sort=False, size=(20, 10), **kwargs):
     """
     Function that plot the given data as histograms
     :param keys: given key data on the X axis
     :param values: given value data on the Y axis
     :param xlabel: label of x axis
     :param ylabel: label of y axis
+    :param title: title of the plot
     :param sort: flag indicates whether the data is sorted
     :return: None
     """
@@ -50,16 +51,16 @@ def plot_histogram(keys, values, xlabel="x", ylabel="y", sort=False, size=(20, 1
     plt.ylabel(ylabel, fontsize=12, fontweight='bold')
     plt.xticks(np.arange(L), keys, rotation=-20, fontweight='bold')
     plt.yticks(fontweight='bold')
+    plt.title(title, fontweight='bold')
 
     plt.show()
 
 
-def plot_choropleth_map(pd_df, attr, state=True, axis_on=False, size=(20, 10), **kwargs):
+def plot_choropleth_map(pd_df, attr, axis_on=False, size=(20, 10), **kwargs):
     """
     Function that plot the choropleth map with the assist of geopands, notice that
     :param gpd_df: geopandas dataframe
     :param attr: attributes we are interested in
-    :param state: whether to annotate each state
     :param axis_on: whether to show the axis or not
     :param size: figure size
     :param **kwargs:
@@ -77,18 +78,17 @@ def plot_choropleth_map(pd_df, attr, state=True, axis_on=False, size=(20, 10), *
     # load the default US map
     gpd_df = gpd.read_file(US_MAP)
 
-    if state:
-        # plot the state abbreviation
-        for i in range(len(gpd_df)):
-            state_abbr, loc = gpd_df.iloc[i, :]['postal'], gpd_df.iloc[i, :]['geometry'].centroid
-            x, y = loc.coords[:][0]
-            plt.text(x, y, state_abbr, fontweight='black', fontsize=20, fontstyle='italic', ha='center')
-
     # add the data column into the geodataframe
     gpd_df[attr] = gpd_df.apply(lambda x: column_map[x['postal']], axis=1)
 
     fig, ax = plt.subplots(figsize=size)
     gpd_df.plot(ax=ax, column=gpd_df[attr], **kwargs)
+
+    # plot the state abbreviation
+    for i in range(len(gpd_df)):
+        state_abbr, loc = gpd_df.iloc[i, :]['postal'], gpd_df.iloc[i, :]['geometry'].centroid
+        x, y = loc.coords[:][0]
+        plt.text(x, y, state_abbr, fontweight='black', fontsize=20, fontstyle='italic', ha='center')
     ax.axis(axis_on)
 
     plt.show()
@@ -149,7 +149,7 @@ def plot_pie_chart(df, attr, label, th, **kwargs):
     fig.show()
 
 
-def plot_wordcloud(df, attr, size=(20, 10), stopwords=set(), **kwargs):
+def plot_wordcloud(df, attr, size=(10, 10), stopwords=set(), **kwargs):
     """
     Plot a wordcloud figure with given pandas dataframe and the attr we are interested in
     :param df: pandas dataframe
@@ -172,8 +172,7 @@ def plot_wordcloud(df, attr, size=(20, 10), stopwords=set(), **kwargs):
     wordcloud = WordCloud(width=800, height=800,
                           background_color='white',
                           stopwords=stopwords,
-                          min_font_size=10,
-                          **kwargs).generate_from_frequency(freq)
+                          **kwargs).generate_from_frequencies(freq)
 
     # plot the WordCloud image
     fig, ax = plt.subplots(figsize=size, facecolor=None)
@@ -184,9 +183,83 @@ def plot_wordcloud(df, attr, size=(20, 10), stopwords=set(), **kwargs):
     fig.show()
 
 
-if __name__ == '__main__':
-    data = pd.read_csv('../2013-2019 Killings by State.csv')
+def plot_scatter_2D(df, x_attr, y_attr, ps, xlabel='x', ylabel='y', size=(20, 10), **kwargs):
+    """
+    Function that plots 2d scatter figure based on the given x,y data
+    :param df: given pandas data frame
+    :param x_attr: given attributes on the x_axis
+    :param y_attr: given attributes on the y_axis
+    :param ps: given point size, normally this depends on the population
+    :param xlabel: given x label
+    :param ylabel: given y label
+    :param size: figure size
+    :param kwargs:
+    :return:
+    """
+    assert isinstance(x_attr, str)
+    assert isinstance(y_attr, str)
+    assert x_attr in df and y_attr in df
+    assert isinstance(xlabel, str) and isinstance(ylabel, str)
+    assert isinstance(size, (list, tuple))
 
-    plot_histogram(data['State Abbreviation'], data['Rate (All People)'], 'State', 'Rate', sort=True)
+    fig = px.scatter(df,
+                     x=x_attr,
+                     y=y_attr,
+                     color='State Abbreviation',
+                     size=ps,
+                     size_max=60,
+                     width=900,
+                     height=400,
+                     title='Crime Rate/Violence Rate',
+                     )
+    fig.show()
+
+
+def plot_waffle(pd_df, attr, title="", rows=15, cols=20, **kwargs):
+    """
+    Plot waffle plots by specifying rows and cols with pandas dataframe
+    :param pd_df: pandas dataframe
+    :param rows:
+    :param cols:
+    :param values:
+    :return:
+    """
+    assert isinstance(pd_df, pd.DataFrame)
+    assert isinstance(attr, str) and attr in pd_df
+    assert isinstance(rows, int) and rows > 1
+    assert isinstance(cols, int) and cols > 1
+
+    # count the attributes and do a simple preprocesing
+    counts = pd_df[attr].value_counts().to_dict()
+    values = collections.defaultdict(int)
+    for key in counts:
+        if 'Convicted' in key:
+            values['Convicted'] += counts[key]
+        elif 'Charged' in key:
+            values['Charged'] += counts[key]
+        else:
+            values['No known charges'] += counts[key]
+
+    fig = plt.figure(
+        FigureClass=Waffle,
+        rows=rows,
+        columns=cols,
+        values=values,
+        icons='male',
+        font_size=15,
+        interval_ratio_x=0.4,
+        interval_ratio_y=1,
+        legend={'loc': 'upper left', 'bbox_to_anchor': (1, 1)},
+        **kwargs
+    )
+    plt.title(title)
+    fig.show()
+
+
+if __name__ == '__main__':
+    data = pd.read_excel('../MPVDatasetDownload.xlsx')
+    plot_waffle(data, 'Criminal Charges?', title='no', rows=15, cols=20)
+    # data = pd.read_csv('../MergeCommon_loc_disposition.csv', engine='python')
+    # plot_wordcloud(data, 'armed', min_font_size=10)
 
 
