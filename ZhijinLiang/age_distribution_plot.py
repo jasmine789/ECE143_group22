@@ -1,12 +1,7 @@
-# This file contains the age distribution plots, including an overall distribution, age distributions for different
-# gender and age distributions for different race.
-# The dataset used is 'MergeCommon_final.csv'
-
+# This file contains the age distribution plot(including data processing and plot)
 import pandas as pd
 import seaborn as sns
-import numpy as np
 import matplotlib.pyplot as plt
-sns.set_theme()
 
 def age_distribution(fileName, outputName = 'age_distribution.png'):
     """
@@ -17,10 +12,15 @@ def age_distribution(fileName, outputName = 'age_distribution.png'):
     :return: age distribution plot
     """
     data = pd.read_csv(fileName, engine='python')
+
+    sns.set(rc={'figure.figsize': (11, 8)})
+    sns.set_style("white")
+    sns.set_context("talk")
+
     fig_sns = sns.distplot(data['age'], hist=True, kde=True, hist_kws={'edgecolor':'black'},kde_kws={'linewidth': 2})
-    fig_sns.set_title('Age Distribution of attacks (2013-2020)')
-    fig_sns.set_ylabel('Frequency')
-    fig_sns.get_figure().savefig(outputName)
+    fig_sns.set_title('Age Distribution of attacks (2013-2020)', fontsize = 20)
+    fig_sns.set_ylabel('Frequency', fontsize = 20)
+    fig_sns.get_figure().savefig(outputName, dpi = 300)
     return fig_sns
 
 def age_distribution_races(fileName, outputName = 'age_distribution_race.png'):
@@ -43,7 +43,9 @@ def age_distribution_races(fileName, outputName = 'age_distribution_race.png'):
     age_N = data[data['race'] == 'N']['age'].values
 
     # Generate plots
-    fig, axs = plt.subplots(nrows=2, figsize= (15,10))
+    fig, axs = plt.subplots(nrows=2, figsize= (18,10))
+    sns.set_style("white")
+    sns.set_context("talk")
 
     # the first plot is distribution plot
     sns.distplot(age_A, hist = False, ax=axs[0])
@@ -75,7 +77,7 @@ def age_distribution_races(fileName, outputName = 'age_distribution_race.png'):
     sns.boxplot(x="age", y="race", data=data, orient ='h', ax = axs[1])
 
     # store the distribution
-    fig_sns.get_figure().savefig(outputName)
+    fig_sns.get_figure().savefig(outputName, dpi = 300)
     return fig_sns
 
 def age_distribution_gender(fileName, outputName = 'age_distribution_gender.png'):
@@ -93,6 +95,9 @@ def age_distribution_gender(fileName, outputName = 'age_distribution_gender.png'
 
     # generate plots
     fig, axs = plt.subplots(nrows=2, figsize= (15,10))
+    sns.set_style("white")
+    sns.set_context("talk")
+
     sns.distplot(age_Female, hist = False, ax = axs[0])
     sns.distplot(age_Male, hist = False, ax = axs[0])
     fig_sns = sns.distplot(age_Tri, hist = False, ax = axs[0])
@@ -107,14 +112,14 @@ def age_distribution_gender(fileName, outputName = 'age_distribution_gender.png'
     data['gender'] = data['gender'].replace(['T'], 'Transgender')
     sns.boxplot(x="gender", y="age", data=data, ax = axs[1])
 
-    fig_sns.get_figure().savefig(outputName)
+    fig_sns.get_figure().savefig(outputName, dpi = 300)
     return fig_sns
 
 
 if __name__ == '__main__':
     # load csv files
     fileName = 'MergeCommon_final.csv'
-    # fig_sns = age_distribution(fileName)
-    # fig_sns_races = age_distribution_races(fileName)
+    fig_sns = age_distribution(fileName)
+    fig_sns_races = age_distribution_races(fileName)
     fig_sns_gender = age_distribution_gender(fileName)
 
