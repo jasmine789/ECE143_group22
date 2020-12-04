@@ -39,15 +39,20 @@ This project tries to analyze:
 
 _To be completed_
 
-1. Make sure all the dependencies have been installed.
+1. Make sure you have all the dependencies installed.
 2. Use the 'main' branch to access all the scripts. 
-3. This repo contains all the cleaned dataset files that were used in this analysis.
+3. This repo contains all the cleaned dataset files that were used in our analysis.
 4. We have a few interactive plots that cannot be viewed on github. To be able to render all the plots, please clone the repo and run it on your local machine.
 5. However, for your convenience, we recommend using the links below to access all of our plots.
 
 ## Plots
 
 _Add links here_
+
+### Mapping Police Violence in USA
+1. [Mapping individual acts of Police Violence](https://github.com/jasmine789/ECE143_group22/blob/main/images/occurancy_per_city.png)
+2. [State-wise frequency of Police Violence](https://github.com/jasmine789/ECE143_group22/blob/main/images/killings_per_state_map.png)
+3. [Bar plot of Police killings state-wise](https://github.com/jasmine789/ECE143_group22/blob/main/images/Killing_per_state_bar.png)
 
 ## Cleaned Databases
 * [2013 - 2019 Killings by Police Department](https://drive.google.com/file/d/1GUNOxTpR4gk7eOgKUHz74KMwVVwgc23l/view?usp=sharing)
