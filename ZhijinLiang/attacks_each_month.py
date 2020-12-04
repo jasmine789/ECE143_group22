@@ -6,7 +6,7 @@ from operator import add
 import numpy as np
 hv.extension('bokeh')
 import seaborn as sns
-sns.set_theme()
+sns.set_style("whitegrid", {'axes.grid' : False})
 
 def attack_over_year_Plot(fileName, button = 'year', outputName = 'attack_over_year.html'):
     """
