@@ -18,7 +18,7 @@ This project tries to analyze:
 * Correlation between crime rate and violence rate of each state
 * Correlation between age of victims and violence against them
 * Amount of charges filed against police officers for committing unnecessary acts of violence
-* Racial dispartiies in acts of deadly violence at the central and state level
+* Racial disparities in acts of deadly violence at the central and state level
 
 ## Code Organization
 
@@ -38,6 +38,12 @@ This project tries to analyze:
 ### Instructions to run script
 
 _To be completed_
+
+1. Make sure all the dependencies have been installed.
+2. Use the 'main' branch to access all the scripts. 
+3. This repo contains all the cleaned dataset files that were used in this analysis.
+4. We have a few interactive plots that cannot be viewed on github. To be able to render all the plots, please clone the repo and run it on your local machine.
+5. However, for your convenience, we recommend using the links below to access all of our plots.
 
 ## Plots
 
