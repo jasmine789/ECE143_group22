@@ -1,6 +1,6 @@
 ECE143 (Fall 2020) Group 22 Project
 
-# Visualizing and Modeling Police Violence in USA
+# Analysis and Visualization of Police Violence in USA
 
 <img src="/images/police_violence.png" height="250" width="1550" alt="SDMTS">
 
@@ -42,8 +42,9 @@ _To be completed_
 1. Make sure you have all the dependencies installed.
 2. Use the 'main' branch to access all the scripts. 
 3. This repo contains all the cleaned dataset files that were used in our analysis.
-4. We have a few interactive plots that cannot be viewed on github. To be able to render all the plots, please clone the repo and run it on your local machine.
-5. However, for your convenience, we recommend using the links below to access all of our plots.
+4. Please run the Jupyter notebook inside the 'Final' folder to render and view all plots we have generated.
+5. We have a few interactive plots that cannot be viewed on github. To be able to render all the plots, please clone the repo and run it on your local machine.
+6. However, for your convenience, we recommend using the links below to access all of our plots.
 
 ## Plots
 
