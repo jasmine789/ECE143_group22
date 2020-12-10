@@ -1,17 +1,12 @@
-# This file is used to analyze the number of attacks over years.
-# It includes a simplified bar plot which indicates the total number of attacks of each year, and an advanced version
-# of above bar chart(also include month info).
-# Moreover, this file contains an interactive version to show the number of attacks changing over years/months.
-# The dataset used is 'MergeCommon_final.csv'
-
 import pandas as pd
 from collections import defaultdict
 import holoviews as hv
 import matplotlib.pyplot as plt
 from operator import add
 import numpy as np
-from datetime import datetime
 hv.extension('bokeh')
+import seaborn as sns
+sns.set_style("whitegrid", {'axes.grid' : False})
 
 def attack_over_year_Plot(fileName, button = 'year', outputName = 'attack_over_year.html'):
     """
@@ -61,7 +56,7 @@ def total_attackes_over_year_Simple(fileName, outputName = 'total_attack_over_ye
         h = rect.get_height()
         plt.text(rect.get_x() + rect.get_width() / 2.0, h, '%d' % int(h), ha='center', va='bottom')
 
-    plt.savefig(outputName)
+    plt.savefig(outputName, dpi = 300)
     plt.show()
 
 def total_attackes_over_year_Advanced(fileName, colorMap = "viridis", outputName = 'total_attack_over_year_bar_advanced.png'):
@@ -102,7 +97,7 @@ def total_attackes_over_year_Advanced(fileName, colorMap = "viridis", outputName
         bars.append(plt.bar(yearList, totalAttacksPerMonth[month], bottom=totalAttacksPerMonthAcc[lastMonth],
                             color=colorSet[i]))
 
-    plt.title('The number of total Attacks over Year')
+    plt.title('The number of total Attacks over Year(month with different color)')
     plt.xlabel('year (2020 up to Oct/2020)')
     plt.ylabel('Attacks Num')
 
@@ -113,7 +108,7 @@ def total_attackes_over_year_Advanced(fileName, colorMap = "viridis", outputName
         plt.text(rect.get_x() + rect.get_width() / 2.0, h, '%d' % int(h), ha='center', va='bottom')
         count = count + 1
 
-    plt.savefig(outputName)
+    plt.savefig(outputName, dpi = 300)
     plt.show()
 
 def processData_attack(fileName):

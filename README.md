@@ -18,7 +18,7 @@ This project tries to analyze:
 * Correlation between crime rate and violence rate of each state
 * Correlation between age of victims and violence against them
 * Amount of charges filed against police officers for committing unnecessary acts of violence
-* Racial dispartiies in acts of deadly violence at the central and state level
+* Racial disparities in acts of deadly violence at the central and state level
 
 ## Code Organization
 
@@ -39,9 +39,32 @@ This project tries to analyze:
 
 _To be completed_
 
+1. Make sure you have all the dependencies installed.
+2. Use the 'main' branch to access all the scripts. 
+3. This repo contains all the cleaned dataset files that were used in our analysis.
+4. We have a few interactive plots that cannot be viewed on github. To be able to render all the plots, please clone the repo and run it on your local machine.
+5. However, for your convenience, we recommend using the links below to access all of our plots.
+
 ## Plots
 
-_Add links here_
+#### Mapping Police Violence in USA
+* [Mapping individual acts of Police Violence](https://github.com/jasmine789/ECE143_group22/blob/main/images/occurancy_per_city.png)
+* [State-wise frequency of Police Violence](https://github.com/jasmine789/ECE143_group22/blob/main/images/killings_per_state_map.png)
+* [Bar plot of Police killings state-wise](https://github.com/jasmine789/ECE143_group22/blob/main/images/Killing_per_state_bar.png)
+
+#### Trends in Police Violence
+* [Number of police killings per year from 2013-2020](https://github.com/jasmine789/ECE143_group22/blob/main/images/attacks_per_year.png)
+* [Number of police killings of each gender]
+* [Relation between police killings and age and race of the victims]
+
+#### Racial Disparities in Police Violence
+* [Bar plot showing number of police killings of different racial communities compared to their total population](https://github.com/jasmine789/ECE143_group22/blob/main/images/racial_disparity.png)
+* [Interactive plot showing racial disparities in California, Texas and New York]
+
+#### Exploring the reasons and consequences of Police Violence
+* [Word-cloud showing the weapons (if any) wielded by the victims while being attacked by the police](https://github.com/jasmine789/ECE143_group22/blob/main/images/word_cloud.png)
+* [Conviction rate of police officers](https://github.com/jasmine789/ECE143_group22/blob/main/images/waffle_plot_charged.png)
+
 
 ## Cleaned Databases
 * [2013 - 2019 Killings by Police Department](https://drive.google.com/file/d/1GUNOxTpR4gk7eOgKUHz74KMwVVwgc23l/view?usp=sharing)
