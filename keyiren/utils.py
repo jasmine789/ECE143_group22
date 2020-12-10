@@ -26,9 +26,3 @@ def format_read(*args):
         print(('{:18}\t'*(len(print_txt[txt])+1)).format(txt, *print_txt[txt], " "))
 
     return data
-
-
-if __name__ == '__main__':
-    # load csv files
-    data_path = ['Killings by State.csv', 'All_killing.csv']
-    killing_by_PD, killing_by_state, all_killing = format_read('Killings by PD.csv')

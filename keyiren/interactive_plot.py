@@ -1,18 +1,18 @@
-from urllib.request import urlopen
-from configs import *
-import json
 import numpy as np
 import pandas as pd
 import geopandas as gpd
 import plotly.express as px
 import plotly.graph_objects as go
 
+US_MAP = 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_1_states_provinces_shp.geojson'
+
 
 def plot_intchoropleth_map(pd_df, attr, us_only=True, **kwargs):
     """
     Function that plots interactive choropleth map
-    :param pd_df:
-    :param attr:
+    :param pd_df: input pandas dataframe
+    :param attr: given attributes we are interested in
+    :param us_only: whether to plot the us only map or not
     :return:
     """
     assert isinstance(pd_df, pd.DataFrame)
@@ -98,12 +98,3 @@ def plot_intbubble_map(pd_df, axis_on=False, size=(20, 10), **kwargs):
 if __name__ == '__main__':
     data = pd.read_csv('../MergeCommon_loc_disposition.csv', engine='python')
     plot_intbubble_map(data, hovertext=data['city'])
-    # pop = ['Black Population', 'Hispanic Population', 'Asian Population', 'White Population', 'Other Population']
-    # count = ['# Black people killed', '# Hispanic people killed', '# Asian people killed', '# White people killed',
-    #          '# Unknown Race people killed']
-    #
-    # pops = np.array([data[key].sum() for key in pop])
-    # x = [2, 5, 8, 12, 16]
-    # weights = [2, 3.4, 1, 7.4, 0.4]
-    # y = np.array([data[key].sum() for key in count]) / pops
-    # plot_weighted_bar(x, y, weights)

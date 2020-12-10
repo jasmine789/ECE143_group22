@@ -4,6 +4,7 @@ from shapely import affinity
 import pandas as pd
 import geopandas as gpd
 
+
 def pd2Point(pd_df):
     """
     Function that maps panda frame locations to geopandas Point object
@@ -43,18 +44,6 @@ def geometry_transform(gdf, row=0, offset=[0, 0], rotate=0, scale=[0, 0]):
 
     return gdf
 
-
-if __name__ == '__main__':
-    from configs import *
-    from matplotlib import pyplot as plt
-    df = gpd.read_file(US_MAP)
-
-    df = geometry_transform(df, 50, [20, -30], 0, [0.3, 0.3])
-    df = geometry_transform(df, 3, [20, 20], 0, [0.5, 0.5])
-
-    df.plot()
-
-    plt.show()
 
 
 

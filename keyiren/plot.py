@@ -1,7 +1,10 @@
+# Plot functions for non-interactive plots
+# simply import the module and run by python command
+# implemented by: Keyi Ren
+
 from matplotlib import pyplot as plt
 import collections
 import plotly.express as px
-from configs import *
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib
 import numpy as np
@@ -10,8 +13,9 @@ import geopandas as gpd
 import transforms
 from pywaffle import Waffle
 
+US_MAP = 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_1_states_provinces_shp.geojson'
 
-def plot_histogram(keys, values, xlabel="x", ylabel="y", title='',sort=False, size=(20, 10), **kwargs):
+def plot_histogram(keys, values, xlabel="x", ylabel="y", title='', sort=False, size=(30, 15), **kwargs):
     """
     Function that plot the given data as histograms
     :param keys: given key data on the X axis
@@ -33,25 +37,30 @@ def plot_histogram(keys, values, xlabel="x", ylabel="y", title='',sort=False, si
 
     L = len(values)
 
-    fig = plt.figure(figsize=size)
+    fig, ax = plt.subplots(figsize=size)
 
     # set bar color
-    offset = 1 # this offset is set to avoid pure white bars
+    offset = 3 # this offset is set to avoid pure white bars
     norm = plt.Normalize(min(values)-offset, max(values)+offset)
-    norm_y = norm(values)
+    norm_y = 1-norm(values)
     map_vir = matplotlib.cm.get_cmap(name='hot')
 
     plt.bar(np.arange(L), values, color=map_vir(norm_y), **kwargs)
 
     # add numerical tags
-    for (x, y) in zip(np.arange(L), values):
-        plt.text(x, y + 0.05, '%.2f' % y, ha='center', va='bottom', fontsize=8, fontweight='bold')
+    x_idx = [0, 1, 2, L-3, L-2, L-1]
+    for x in x_idx:
+        plt.text(x, values[x] + 0.05, '%.2f' % values[x], ha='center', va='bottom', fontsize=15, fontweight='bold')
 
-    plt.xlabel(xlabel, fontsize=12, fontweight='bold')
-    plt.ylabel(ylabel, fontsize=12, fontweight='bold')
-    plt.xticks(np.arange(L), keys, rotation=-20, fontweight='bold')
-    plt.yticks(fontweight='bold')
-    plt.title(title, fontweight='bold')
+    plt.xlabel(xlabel, fontsize=20)
+    plt.ylabel(ylabel, fontsize=20)
+    plt.xticks(np.arange(L), keys, rotation=-20, fontsize=20)
+    plt.yticks(fontsize=20)
+
+    plt.title(title, fontsize=30, fontweight='bold')
+
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
 
     plt.show()
 
@@ -172,6 +181,7 @@ def plot_wordcloud(df, attr, size=(10, 10), stopwords=set(), **kwargs):
     wordcloud = WordCloud(width=800, height=800,
                           background_color='white',
                           stopwords=stopwords,
+                          relative_scaling=0.3,
                           **kwargs).generate_from_frequencies(freq)
 
     # plot the WordCloud image
@@ -183,7 +193,7 @@ def plot_wordcloud(df, attr, size=(10, 10), stopwords=set(), **kwargs):
     fig.show()
 
 
-def plot_scatter_2D(df, x_attr, y_attr, ps, xlabel='x', ylabel='y', size=(20, 10), **kwargs):
+def plot_scatter_2D(df, x_attr, y_attr, ps=None, xlabel='x', ylabel='y', size=(20, 10), **kwargs):
     """
     Function that plots 2d scatter figure based on the given x,y data
     :param df: given pandas data frame
@@ -206,22 +216,22 @@ def plot_scatter_2D(df, x_attr, y_attr, ps, xlabel='x', ylabel='y', size=(20, 10
                      x=x_attr,
                      y=y_attr,
                      color='State Abbreviation',
-                     size=ps,
-                     size_max=60,
+                     # size=ps,
                      width=900,
                      height=400,
                      title='Crime Rate/Violence Rate',
+                     trendline="ols",
                      )
     fig.show()
 
 
-def plot_waffle(pd_df, attr, title="", rows=15, cols=20, **kwargs):
+def plot_waffle(pd_df, attr, rows=15, cols=20, **kwargs):
     """
     Plot waffle plots by specifying rows and cols with pandas dataframe
     :param pd_df: pandas dataframe
-    :param rows:
-    :param cols:
-    :param values:
+    :param attr: given attributes  we are interested in
+    :param rows: number of rows in the waffle plot
+    :param cols: number of columns in the waffle plot
     :return:
     """
     assert isinstance(pd_df, pd.DataFrame)
@@ -229,7 +239,7 @@ def plot_waffle(pd_df, attr, title="", rows=15, cols=20, **kwargs):
     assert isinstance(rows, int) and rows > 1
     assert isinstance(cols, int) and cols > 1
 
-    # count the attributes and do a simple preprocesing
+    # count the attributes and do a simple preprocess
     counts = pd_df[attr].value_counts().to_dict()
     values = collections.defaultdict(int)
     for key in counts:
@@ -246,13 +256,18 @@ def plot_waffle(pd_df, attr, title="", rows=15, cols=20, **kwargs):
         columns=cols,
         values=values,
         icons='male',
-        font_size=15,
-        interval_ratio_x=0.4,
-        interval_ratio_y=1,
-        legend={'loc': 'upper left', 'bbox_to_anchor': (1, 1)},
+        font_size=16,
+        interval_ratio_x=2,
+        interval_ratio_y=2,
+        legend={'loc': 'lower left',
+               'bbox_to_anchor': (0, -0.2),
+               'ncol': 3,
+               'framealpha': 0,
+               'fontsize': 12
+               },
         **kwargs
     )
-    plt.title(title)
+
     fig.show()
 
 
@@ -296,15 +311,15 @@ def plot_weighted_bar(keys, values, weights, count, xlabel="x", ylabel="y", titl
 
     # add text on top of the bar and middle
     for _x, _y, k, c in zip(x, values, keys, count):
-        plt.text(_x, _y + 0.05, k.split()[0], ha='center', va='bottom', fontsize=12, fontweight='bold')
-        plt.text(_x, _y/2, '%d killed'% c, ha='center', va='bottom', fontsize=12)
+        plt.text(_x, _y + 0.05, k.split()[0], ha='center', va='bottom', fontsize=15, fontweight='bold')
+        plt.text(_x, _y/2, '%d killed'% c, ha='center', va='bottom', fontsize=15)
 
     # plt.axis('off')
 
-    plt.xlabel(xlabel, fontsize=12)
-    plt.ylabel(ylabel, fontsize=12)
-    plt.title(title, fontsize=12)
-    plt.xticks(x, ['39.7M', '57.5M', '197.2M', '17.4M'], fontsize=12)
+    plt.xlabel(xlabel, fontsize=20)
+    plt.ylabel(ylabel, fontsize=20)
+    plt.title(title, fontsize=20)
+    plt.xticks(x, ['39.7M', '57.5M', '197.2M', '17.4M'], fontsize=15)
 
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -313,19 +328,12 @@ def plot_weighted_bar(keys, values, weights, count, xlabel="x", ylabel="y", titl
 
 
 if __name__ == '__main__':
-    data = pd.read_csv('../2013-2019 Killings by State and crime rate.csv')
-    pop = ['Black Population', 'Hispanic Population', 'Asian Population', 'White Population']
-    count = ['# Black people killed', '# Hispanic people killed', '# Asian people killed', '# White people killed']
-
-    pops = np.array([data[key].sum() for key in pop])
-    weights = pops / pops.sum()
-    y = np.array([data[key].sum() for key in count]) / pops * 10**6
-    killings = np.array([data[key].sum() for key in count])
-
-    plot_weighted_bar(pop, y, weights, killings,
-                      xlabel='Part of U.S population',
-                      ylabel='Killings per million',
-                      title='Racial disparity in killing rate',
-                      sort=True)
-
+    data = pd.read_csv('../2013-2019 Killings by State and crime rate.csv', engine='python')
+    data['AVG CRIME RATE(PER 100K)'] = data['AVG CRIME RATE(PER 100K)'] / 1000
+    plot_scatter_2D(data,
+                    'AVG CRIME RATE(PER 100K)',
+                    'Rate (All People)',
+                    '# People Killed',
+                    'Average crime rate(%)',
+                    'Rate(%)')
 
