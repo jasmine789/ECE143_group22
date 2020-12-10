@@ -1,3 +1,4 @@
+# This file contains the codes to generate the number of attack plots over time, including two bar plots(y-axis is the number of attacks of each year, x-axis is year) and two interactive plots(one for year, one for month).
 import pandas as pd
 from collections import defaultdict
 import holoviews as hv
