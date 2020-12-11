@@ -45,6 +45,8 @@ This project tries to analyze:
 5. We have a few interactive plots that cannot be viewed on github. To be able to render all the plots, please clone the repo and run it on your local machine.
 6. However, for your convenience, we recommend using the links below to access all of our plots.
 
+##### Note: Please use your '@eng.ucsd.edu' email to access the files below
+
 ## Plots
 
 #### Mapping Police Violence in USA
@@ -72,7 +74,6 @@ This project tries to analyze:
 * [2013 - 2019 Killings by State](https://drive.google.com/file/d/1VrDPwBX59YGHt1_VcLo2_VXAS1ntFoZm/view?usp=sharing)
 * [2015 - 2020 Database of Victims of Police Killings](https://drive.google.com/file/d/1tC9_Bv2mbFLoE5bvt8PLelfm3Yon-CsW/view?usp=sharing)
 
-Note: Use '@eng.ucsd.edu' e-mail ID to access these files
 
 ## [Project Presentation](https://drive.google.com/file/d/1NpZ_353YGvFJ0jOEvRwzNVKUKdauiBG3/view?usp=sharing)
 
