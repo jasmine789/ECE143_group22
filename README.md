@@ -34,6 +34,7 @@ This project tries to analyze:
 8. datetime
 9. seaborn
 10. holoviews
+11. bokeh
 
 ### Instructions to run script
 
