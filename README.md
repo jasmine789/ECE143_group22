@@ -60,7 +60,6 @@ This project tries to analyze:
 * [Number of police killings of each gender](https://drive.google.com/file/d/1oDGnveosk2Xcl2DZTjm9A5Br-o1hFL3v/view?usp=sharing)
 * [Relation between police killings and age and race of the victims](https://drive.google.com/file/d/14V1qmEVP65pcSZzn2t0-w-WV9_q1_0wv/view?usp=sharing)
 * [Total number of attacks every month](https://drive.google.com/file/d/1Y8veOEQ3J6e6O7t8V5dD97RW1u2XGaeV/view?usp=sharing)
-* [Relation between crime rate and police violence rate](https://drive.google.com/file/d/1SYcGHQKn-8W1awSKnkuO0OqrQPfDTfns/view?usp=sharing)
 
 #### Racial Disparities in Police Violence
 * [Bar plot showing number of police killings of different racial communities compared to their total population](https://drive.google.com/file/d/1JmvijmExzRCa2QUOTUk43jujolULuyn5/view?usp=sharing)
@@ -68,6 +67,7 @@ This project tries to analyze:
 
 #### Exploring the reasons and consequences of Police Violence
 * [Word-cloud showing the weapons (if any) wielded by the victims while being attacked by the police](https://drive.google.com/file/d/1-7wlXFGNvfvXfh_EEqXQ8t9fjnJv8b08/view?usp=sharing)
+* [Relation between crime rate and police violence rate](https://drive.google.com/file/d/1SYcGHQKn-8W1awSKnkuO0OqrQPfDTfns/view?usp=sharing)
 * [Conviction rate of police officers](https://drive.google.com/file/d/1OyF2sy2yVhNMdUHTrHs10_a_-1pQ1Wtr/view?usp=sharing)
 
 
