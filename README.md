@@ -24,17 +24,23 @@ This project tries to analyze:
 
 ### Requirements and Dependencies
 
-1. matplotlib
-2. numpy
-3. pandas
-4. geopandas
-5. plotly
-6. shapely
-7. wordcloud
-8. datetime
-9. seaborn
-10. holoviews
-11. bokeh
+matplotlib==3.2.2 <br>
+numpy==1.18.5 <br>
+pandas==1.0.5 <br>
+geopandas==0.8.1 <br>
+plotly==4.13.0 <br>
+shapely==1.7.1 <br>
+wordcloud==1.8.1 <br>
+seaborn==0.11.0 <br>
+holoviews==1.13.5 <br>
+bokeh==2.2.3 <br>
+xlrd==1.2.0 <br>
+pywaffle==0.6.1 <br>
+
+You can install all the packages through 
+```
+pip install -r requirements.txt
+```
 
 ### Instructions to run script
 
