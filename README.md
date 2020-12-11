@@ -37,34 +37,33 @@ This project tries to analyze:
 
 ### Instructions to run script
 
-_To be completed_
-
 1. Make sure you have all the dependencies installed.
 2. Use the 'main' branch to access all the scripts. 
 3. This repo contains all the cleaned dataset files that were used in our analysis.
-4. Please run the Jupyter notebook inside the 'Final' folder to render and view all plots we have generated.
+4. Please run the Jupyter notebook inside the 'notebooks' folder to render and view all plots we have generated.
 5. We have a few interactive plots that cannot be viewed on github. To be able to render all the plots, please clone the repo and run it on your local machine.
 6. However, for your convenience, we recommend using the links below to access all of our plots.
 
 ## Plots
 
 #### Mapping Police Violence in USA
-* [Mapping individual acts of Police Violence](https://github.com/jasmine789/ECE143_group22/blob/main/images/occurancy_per_city.png)
-* [State-wise frequency of Police Violence](https://github.com/jasmine789/ECE143_group22/blob/main/images/killings_per_state_map.png)
-* [Bar plot of Police killings state-wise](https://github.com/jasmine789/ECE143_group22/blob/main/images/Killing_per_state_bar.png)
+* [Mapping individual acts of Police Violence](https://drive.google.com/file/d/1YRSA_JK4tMGxe3LJ7ZYkXOAwuend9165/view?usp=sharing)
+* [State-wise frequency of Police Violence](https://drive.google.com/file/d/1qZbK5lAs5UvA6y1uBtSmhH4k3pBj51wx/view?usp=sharing)
+* [Bar plot of Police killings state-wise](https://drive.google.com/file/d/1Ml5ZY6NLOmwcRCgmFlpjprBflBQWS3iv/view?usp=sharing)
 
 #### Trends in Police Violence
-* [Number of police killings per year from 2013-2020](https://github.com/jasmine789/ECE143_group22/blob/main/images/attacks_per_year.png)
-* [Number of police killings of each gender]
-* [Relation between police killings and age and race of the victims]
+* [Number of police killings per year from 2013-2020](https://drive.google.com/file/d/1y8kWg02Nt_ab6kY0bxF4rvKwx32s6Jp6/view?usp=sharing)
+* [Number of police killings versus age of victims](https://drive.google.com/file/d/1gwF8MfR2UxbzG8cdt0Igv93kbjYN--oi/view?usp=sharing)
+* [Number of police killings of each gender](https://drive.google.com/file/d/1oDGnveosk2Xcl2DZTjm9A5Br-o1hFL3v/view?usp=sharing)
+* [Relation between police killings and age and race of the victims](https://drive.google.com/file/d/14V1qmEVP65pcSZzn2t0-w-WV9_q1_0wv/view?usp=sharing)
 
 #### Racial Disparities in Police Violence
-* [Bar plot showing number of police killings of different racial communities compared to their total population](https://github.com/jasmine789/ECE143_group22/blob/main/images/racial_disparity.png)
-* [Interactive plot showing racial disparities in California, Texas and New York]
+* [Bar plot showing number of police killings of different racial communities compared to their total population](https://drive.google.com/file/d/1JmvijmExzRCa2QUOTUk43jujolULuyn5/view?usp=sharing)
+* [Interactive plot showing racial disparities in California, Texas and New York](https://drive.google.com/drive/folders/1OvT5mRIPAVQozuIMgJf0dgWHgfaDaOvK?usp=sharing)
 
 #### Exploring the reasons and consequences of Police Violence
-* [Word-cloud showing the weapons (if any) wielded by the victims while being attacked by the police](https://github.com/jasmine789/ECE143_group22/blob/main/images/word_cloud.png)
-* [Conviction rate of police officers](https://github.com/jasmine789/ECE143_group22/blob/main/images/waffle_plot_charged.png)
+* [Word-cloud showing the weapons (if any) wielded by the victims while being attacked by the police](https://drive.google.com/file/d/1-7wlXFGNvfvXfh_EEqXQ8t9fjnJv8b08/view?usp=sharing)
+* [Conviction rate of police officers](https://drive.google.com/file/d/1OyF2sy2yVhNMdUHTrHs10_a_-1pQ1Wtr/view?usp=sharing)
 
 
 ## Cleaned Databases
@@ -73,6 +72,8 @@ _To be completed_
 * [2015 - 2020 Database of Victims of Police Killings](https://drive.google.com/file/d/1tC9_Bv2mbFLoE5bvt8PLelfm3Yon-CsW/view?usp=sharing)
 
 Note: Use '@eng.ucsd.edu' e-mail ID to access these files
+
+## [Project Presentation](https://drive.google.com/file/d/1NpZ_353YGvFJ0jOEvRwzNVKUKdauiBG3/view?usp=sharing)
 
 ## Team Members
 1. Keyi Ren
